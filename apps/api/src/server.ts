@@ -4,6 +4,8 @@ import helmet from "@fastify/helmet";
 import rateLimit from "@fastify/rate-limit";
 import { z } from "zod";
 import { registerHealthRoutes } from "./health.js";
+import { catalogRoutes } from "./catalog.js";
+import { Pool } from "pg";
 
 const env = z
   .object({
@@ -15,28 +17,25 @@ const env = z
   })
   .parse(process.env);
 const app = Fastify({ logger: true, genReqId: () => crypto.randomUUID() });
+const pool = env.DATABASE_URL
+  ? new Pool({ connectionString: env.DATABASE_URL })
+  : null;
 await app.register(helmet, { contentSecurityPolicy: false });
 await app.register(cors, {
   origin: env.WEB_ORIGIN.split(",").map((x) => x.trim()),
   credentials: true,
 });
 await app.register(rateLimit, { max: 120, timeWindow: "1 minute" });
-app.get("/healthz", async () => ({ status: "ok", service: "merkatolink-api" }));
-app.get("/readyz", async (_req, reply) => {
-  if (!env.DATABASE_URL)
-    return reply
-      .code(503)
-      .send({ status: "not_ready", reason: "DATABASE_URL is not configured" });
-  try {
-    const { Pool } = await import("pg");
-    const pool = new Pool({ connectionString: env.DATABASE_URL, max: 1 });
-    await pool.query("select 1");
-    await pool.end();
-    return { status: "ready" };
-  } catch (error) {
-    app.log.error(error);
-    return reply.code(503).send({ status: "not_ready" });
-  }
+await registerHealthRoutes(app, async () => {
+  if (!pool) return false;
+  await pool.query("select 1");
+  return true;
+});
+await app.register(catalogRoutes, {
+  query: async (sql, values) => {
+    if (!pool) throw new Error("Database is not configured.");
+    return pool.query(sql, values ? [...values] : []);
+  },
 });
 app.get("/v1/auth/session", async () => ({
   authenticated: false,

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
 import {
   Search,
@@ -153,6 +153,27 @@ function App() {
     [checkout, O] = useState(false),
     [placed, P] = useState(false),
     [rate, R] = useState(156.4);
+  const [terraCounts, setTerraCounts] = useState<Record<string, number>>({});
+  useEffect(() => {
+    const controller = new AbortController();
+    const base = import.meta.env.VITE_API_URL || "http://localhost:4000";
+    void fetch(`${base}/v1/terras`, { signal: controller.signal })
+      .then((response) => {
+        if (!response.ok) throw new Error("Directory unavailable");
+        return response.json() as Promise<{
+          data: { name: string; trader_count: number }[];
+        }>;
+      })
+      .then(({ data }) =>
+        setTerraCounts(
+          Object.fromEntries(
+            data.map((terra) => [terra.name, terra.trader_count]),
+          ),
+        ),
+      )
+      .catch(() => undefined);
+    return () => controller.abort();
+  }, []);
   const shown = useMemo(
     () =>
       products.filter(
@@ -292,7 +313,12 @@ function App() {
                 <span className="tile-icon">{t.icon}</span>
                 <b>{t.n}</b>
                 <small>{t.desc}</small>
-                <i>{t.count}　↗</i>
+                <i>
+                  {terraCounts[t.n] === undefined
+                    ? "Demo directory"
+                    : terraCounts[t.n] + " verified shops"}
+                  　↗
+                </i>
               </button>
             ))}
           </div>

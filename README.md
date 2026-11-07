@@ -23,7 +23,7 @@ A digital wholesale marketplace and mini-ERP organized by **terra**. The current
 
 ## Current vs. planned functionality
 
-The terra directory and Rate Shock UI preview are present. Checkout, auth, SMS OTP, payments, ledger, SSE, route-level role authorization, storage uploads, invoices and role-specific workflows are not yet wired end to end. The frontend currently keeps cart/order state in memory. API readiness checks Postgres; a health response does not imply the business API is complete. The SQL policy foundation also needs a full role-by-role security review before real data or public deployment.
+The terra directory calls the public API when configured and falls back to labeled demo mode if unavailable. The Rate Shock UI preview is illustrative only. Checkout, auth, SMS OTP, payments, ledger, SSE, route-level role authorization, storage uploads, invoices and role-specific workflows are not yet wired end to end. The frontend currently keeps cart/order state in memory. API readiness checks Postgres; a health response does not imply the business API is complete. The SQL policy foundation also needs a full role-by-role security review before real data or public deployment.
 
 ## Checks
 

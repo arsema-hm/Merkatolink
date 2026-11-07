@@ -1,0 +1,26 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: merkatolink
+      POSTGRES_USER: merkato
+      POSTGRES_PASSWORD: local_only_change_me
+    ports: ["5432:5432"]
+    volumes: ["postgres_data:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U merkato -d merkatolink"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+  minio:
+    image: minio/minio:RELEASE.2025-02-07T23-21-09Z
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: localmerkato
+      MINIO_ROOT_PASSWORD: local_only_change_me
+    ports: ["9000:9000", "9001:9001"]
+  mailpit:
+    image: axllent/mailpit:latest
+    ports: ["1025:1025", "8025:8025"]
+volumes:
+  postgres_data:

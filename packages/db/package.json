@@ -1,0 +1,18 @@
+{
+  "name": "@merkatolink/db",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "migrate": "node --env-file=../../.env src/db.mjs migrate",
+    "seed": "node --env-file=../../.env src/db.mjs seed",
+    "reset": "node --env-file=../../.env src/db.mjs reset",
+    "build": "node --check src/db.mjs",
+    "typecheck": "node --check src/db.mjs",
+    "lint": "prettier --check src",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "pg": "^8.13.3"
+  }
+}

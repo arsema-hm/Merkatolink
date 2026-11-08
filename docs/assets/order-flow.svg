@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="330" viewBox="0 0 1100 330" role="img" aria-labelledby="title desc">
+  <title id="title">MerkatoLink demo order flow</title>
+  <desc id="desc">Three steps: choose a terra, find a trader and review products, then send a demo order with delivery and payment preference.</desc>
+  <rect width="1100" height="330" rx="12" fill="#f8f6f0"/>
+  <text x="50" y="54" font-family="Arial,sans-serif" font-size="10" font-weight="700" letter-spacing="2" fill="#9c674a">HOW THE MARKETPLACE FLOW WORKS</text>
+  <g font-family="Arial,sans-serif">
+    <g transform="translate(50 88)">
+      <rect width="286" height="185" rx="8" fill="#fffefa" stroke="#e3ded2"/>
+      <circle cx="43" cy="42" r="23" fill="#e7eadf"/><text x="43" y="48" text-anchor="middle" font-size="16" font-weight="700" fill="#526747">01</text>
+      <text x="28" y="94" font-family="Georgia,serif" font-size="25" fill="#292d25">Choose a terra</text>
+      <text x="28" y="124" font-size="12" fill="#696b61">Start with the market section for</text>
+      <text x="28" y="145" font-size="12" fill="#696b61">the goods you need.</text>
+      <text x="28" y="169" font-size="10" font-weight="700" fill="#526747">Kimem · Shema · Somali · more</text>
+    </g>
+    <path d="M354 180h38m-10-10 10 10-10 10" fill="none" stroke="#9b7357" stroke-width="2"/>
+    <g transform="translate(407 88)">
+      <rect width="286" height="185" rx="8" fill="#fffefa" stroke="#e3ded2"/>
+      <circle cx="43" cy="42" r="23" fill="#f0e4d9"/><text x="43" y="48" text-anchor="middle" font-size="16" font-weight="700" fill="#a45f43">02</text>
+      <text x="28" y="94" font-family="Georgia,serif" font-size="25" fill="#292d25">Find a trader</text>
+      <text x="28" y="124" font-size="12" fill="#696b61">Review the fictional shops, product</text>
+      <text x="28" y="145" font-size="12" fill="#696b61">units and minimum order quantities.</text>
+      <text x="28" y="169" font-size="10" font-weight="700" fill="#a45f43">Search · categories · cart</text>
+    </g>
+    <path d="M711 180h38m-10-10 10 10-10 10" fill="none" stroke="#9b7357" stroke-width="2"/>
+    <g transform="translate(764 88)">
+      <rect width="286" height="185" rx="8" fill="#fffefa" stroke="#e3ded2"/>
+      <circle cx="43" cy="42" r="23" fill="#e7eadf"/><text x="43" y="48" text-anchor="middle" font-size="16" font-weight="700" fill="#526747">03</text>
+      <text x="28" y="94" font-family="Georgia,serif" font-size="25" fill="#292d25">Send an order</text>
+      <text x="28" y="124" font-size="12" fill="#696b61">Choose delivery and payment, then</text>
+      <text x="28" y="145" font-size="12" fill="#696b61">review it in the trader workspace.</text>
+      <text x="28" y="169" font-size="10" font-weight="700" fill="#526747">Local demo · no payment taken</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="420" viewBox="0 0 1100 420" role="img" aria-labelledby="title desc">
+  <title id="title">MerkatoLink demo architecture</title>
+  <desc id="desc">React and Vite web app calls a Fastify API. The local demo uses fictional catalog data in code and writes account and order state to ignored JSON files. An optional PostgreSQL schema and adapter are separate foundations.</desc>
+  <rect width="1100" height="420" rx="12" fill="#f8f6f0"/>
+  <text x="48" y="51" font-family="Arial,sans-serif" font-size="10" font-weight="700" letter-spacing="2" fill="#9c674a">ARCHITECTURE · LOCAL DEMO MODE</text>
+  <g font-family="Arial,sans-serif">
+    <g transform="translate(48 98)">
+      <rect width="290" height="198" rx="8" fill="#fffefa" stroke="#dcd6c8"/>
+      <rect width="290" height="38" rx="8" fill="#526747"/>
+      <text x="20" y="25" font-size="12" font-weight="700" fill="#fff">01 · Web app</text>
+      <text x="22" y="77" font-family="Georgia,serif" font-size="25" fill="#292d25">React + TypeScript</text>
+      <text x="22" y="108" font-size="12" fill="#696b61">Vite · responsive UI · language/theme</text>
+      <text x="22" y="132" font-size="12" fill="#696b61">Product discovery · cart · checkout</text>
+      <text x="22" y="156" font-size="12" fill="#696b61">Trader workspace preview</text>
+      <text x="22" y="181" font-size="10" font-weight="700" fill="#526747">apps/web</text>
+    </g>
+    <path d="M360 196h47m-11-10 11 10-11 10" fill="none" stroke="#9b7357" stroke-width="2"/>
+    <g transform="translate(423 98)">
+      <rect width="290" height="198" rx="8" fill="#fffefa" stroke="#dcd6c8"/>
+      <rect width="290" height="38" rx="8" fill="#a45f43"/>
+      <text x="20" y="25" font-size="12" font-weight="700" fill="#fff">02 · API</text>
+      <text x="22" y="77" font-family="Georgia,serif" font-size="25" fill="#292d25">Fastify + Zod</text>
+      <text x="22" y="108" font-size="12" fill="#696b61">Catalog and trader endpoints</text>
+      <text x="22" y="132" font-size="12" fill="#696b61">Validates local demo orders/profiles</text>
+      <text x="22" y="156" font-size="12" fill="#696b61">Status changes update demo stock</text>
+      <text x="22" y="181" font-size="10" font-weight="700" fill="#a45f43">apps/api</text>
+    </g>
+    <path d="M735 196h47m-11-10 11 10-11 10" fill="none" stroke="#9b7357" stroke-width="2"/>
+    <g transform="translate(798 98)">
+      <rect width="254" height="198" rx="8" fill="#fffefa" stroke="#dcd6c8"/>
+      <rect width="254" height="38" rx="8" fill="#56564c"/>
+      <text x="20" y="25" font-size="12" font-weight="700" fill="#fff">03 · Demo storage</text>
+      <text x="20" y="77" font-family="Georgia,serif" font-size="24" fill="#292d25">Local JSON</text>
+      <text x="20" y="108" font-size="12" fill="#696b61">Fictional starter catalog</text>
+      <text x="20" y="132" font-size="12" fill="#696b61">Ignored .demo-data files</text>
+      <text x="20" y="156" font-size="12" fill="#696b61">Single-computer preview only</text>
+      <text x="20" y="181" font-size="10" font-weight="700" fill="#56564c">not PostgreSQL</text>
+    </g>
+    <rect x="48" y="331" width="1004" height="49" rx="5" fill="#e9e5da"/>
+    <text x="69" y="361" font-size="12" font-weight="700" fill="#4c5147">Optional foundation:</text>
+    <text x="190" y="361" font-size="12" fill="#696b61">PostgreSQL migrations, seed and adapter are separate and still need live database verification.</text>
+  </g>
+</svg>

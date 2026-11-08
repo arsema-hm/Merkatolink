@@ -242,6 +242,11 @@ export class DemoCatalogStore implements CatalogStore {
     ".demo-data",
     "stock.json",
   );
+  private readonly accountsPath = resolve(
+    process.cwd(),
+    ".demo-data",
+    "accounts.json",
+  );
   private stock: Record<string, number> = {};
   private async loadStock() {
     try {
@@ -421,5 +426,46 @@ export class DemoCatalogStore implements CatalogStore {
       "utf8",
     );
     return { invoice_no: order.invoice_no, status: order.status };
+  }
+
+  async createDemoAccount(input: {
+    name: string;
+    phone: string;
+    language: string;
+  }) {
+    await mkdir(dirname(this.accountsPath), { recursive: true });
+    let accounts: {
+      id: string;
+      name: string;
+      phone: string;
+      language: string;
+      created_at: string;
+      mode: "fictional-demo";
+    }[] = [];
+    try {
+      accounts = JSON.parse(
+        await readFile(this.accountsPath, "utf8"),
+      ) as typeof accounts;
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+    }
+    if (accounts.some((account) => account.phone === input.phone))
+      throw Object.assign(
+        new Error("An account for this demo phone number already exists."),
+        { statusCode: 409 },
+      );
+    const account = {
+      id: `DEMO-USER-${String(accounts.length + 1).padStart(4, "0")}`,
+      ...input,
+      created_at: new Date().toISOString(),
+      mode: "fictional-demo" as const,
+    };
+    accounts.push(account);
+    await writeFile(
+      this.accountsPath,
+      JSON.stringify(accounts, null, 2),
+      "utf8",
+    );
+    return account;
   }
 }

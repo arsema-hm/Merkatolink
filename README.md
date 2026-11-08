@@ -1,49 +1,130 @@
 # MerkatoLink
 
-**A digital wholesale marketplace and mini-ERP concept for Addis Ababa’s Merkato.** Browse by terra, discover fictional wholesale traders, build an order, and explore trader-side order and pricing tools.
+### A digital wholesale marketplace concept for Addis Ababa’s Merkato
 
-> **Demo only:** All shops, people, contact details, prices and transactions are fictional. This repository is a portfolio prototype, not a production commerce or accounting system. Do not enter real customer or business data.
+MerkatoLink helps retailers explore fictional wholesale traders by **terra**, compare product units and minimum quantities, and prepare a demo order. A trader workspace previews order handling, stock updates and a landed-cost illustration.
 
-## Run the demo in VS Code (Windows)
+![MerkatoLink storefront and fictional wholesale catalog concept](docs/assets/merkato-overview.svg)
 
-Requirements: Node.js 22 or newer. Open this folder in VS Code, choose **Terminal → New Terminal**, then run:
+> **Portfolio demo only.** All shops, people, phone numbers, products, prices, orders and business figures are fictional. The default backend is a local demo store. This project is not secure or complete enough for real customer, trader, financial or accounting data.
+
+> **Hosting status:** You can push this code to GitHub now, but the current API should not be exposed as a public interactive demo. Read the [GitHub and deployment guide](docs/DEPLOYMENT.md) first; it explains the remaining backend security and persistence work.
+
+## Publishing safety checklist
+
+Before making the repository public, check the files and commit history—not just this README:
+
+- [ ] No `.env` file containing credentials or secrets.
+- [ ] No API keys, passwords or real database connection strings.
+- [ ] No real customer, trader or personal information.
+- [ ] `apps/api/.demo-data/` is excluded from Git.
+- [ ] No private documents or unrelated personal files.
+- [ ] No credentials accidentally committed in earlier Git commits.
+- [ ] No production database credentials in configuration files.
+
+In VS Code's terminal, run `git status` to review pending files and `git ls-files` to review tracked files. `.gitignore` excludes `.env` and `.demo-data`, but it cannot remove files already committed. The current history contains five commits; a scan found only the tracked `.env.example` with local placeholder credentials (`local_only_change_me`), and no tracked `.env`, `.demo-data` files or obvious real secrets. Review that history yourself before making the repository public.
+
+## Contents
+
+- [Run locally](#run-locally)
+- [Explore the demo](#explore-the-demo)
+- [Demo data and reset](#demo-data-and-reset)
+- [Languages](#languages)
+- [Architecture](#architecture)
+- [Project structure](#project-structure)
+- [Checks](#checks)
+- [Known limitations](#known-limitations)
+- [GitHub](#github)
+
+## Run locally
+
+**Requirements:** Node.js 22 or newer and Corepack. These commands are for Windows PowerShell in VS Code.
+
+1. Open the repository folder in VS Code.
+2. Select **Terminal → New Terminal**.
+3. Install workspace dependencies and start the web app and API:
 
 ```powershell
 corepack.cmd pnpm install
 corepack.cmd pnpm dev
 ```
 
-Open the local Vite URL printed in the terminal (usually `http://localhost:5173`). If that port is busy, Vite selects another. The API starts on `http://localhost:4000`. Keep the terminal open while using the app; press **Ctrl+C** to stop both servers.
+Open the Vite URL printed in the terminal—usually `http://localhost:5173`. If that port is busy, Vite prints a different one. The local API normally listens on `http://localhost:4000`. Keep the terminal running while exploring; press **Ctrl+C** to stop the dev processes.
 
-No database, Docker, `.env` file, or live credentials are required for the default demo. Demo checkout writes fictional orders and stock data beneath `apps/api/.demo-data/`; that directory is ignored by Git. The trader workspace can review orders, confirm them (which deducts stock), or cancel them (which restores stock after confirmation). The JSON store is local to one computer and is not designed for multiple users or deployment.
+The default demo needs no Docker, database, `.env` file, live credentials or payment provider.
 
-## What you can explore
+## Explore the demo
 
-- Browse the market by terra and open verified fictional trader profiles.
-- Search and filter wholesale catalog listings; review unit and minimum-order information.
-- Add products to a cart and submit a demo order with delivery and payment preferences.
-- Open **Trader workspace (preview)** to change demo order status and explore the Rate Shock illustration.
-- Read **How it works** and **About our website** for a plain-language introduction.
+1. Choose a **terra** such as Kimem, Shema or Somali.
+2. Open a fictional trader and browse the catalog. Search, filter categories and review selling units and minimum quantities.
+3. Add a product to the bag, then choose pickup or delivery and a payment preference.
+4. Open **Trader workspace (preview)** to inspect demo orders. Confirming an order reduces demo stock; cancelling a confirmed order restores it.
+5. Try the light/dark toggle, language selector, and **Merkato Daily** business-news cards.
 
-The public app uses the Fastify API for terra, trader and catalog data. Demo checkout and order status are validated by the API. In PostgreSQL mode, order creation writes buyer, order and order-line records in a transaction; the SQL trigger handles stock deduction when the order is confirmed. The current UI does not yet provide authenticated database-backed trader order management.
+The checkout is a simulated order request. It does not take payment or contact a real trader. VAT and delivery calculations are demo behavior and should not be used as tax or commercial advice.
 
-## PostgreSQL development (optional)
+### Create a demo profile
 
-Docker Desktop must be installed and running. In PowerShell:
+Choose **Create account**, enter a fictional name and the placeholder number `09XX XXX XXX`, select a language and create the profile. No password is created and this does not sign you in. The profile is stored in the local demo JSON data. The placeholder is not a valid number for submitting an order; use fictional data when exercising the form.
+
+### Review the flow
+
+![Three-step flow: choose a terra, find a trader, send an order](docs/assets/order-flow.svg)
+
+## Demo data and reset
+
+The API starts with a fictional catalog defined in its source. Demo accounts, orders and adjusted stock are written beneath `apps/api/.demo-data/`, which Git ignores. This JSON store is for a single-computer preview; it is not PostgreSQL, cloud storage or multi-user persistence.
+
+To reset the generated demo profiles, orders and stock adjustments:
+
+1. Stop the dev processes with **Ctrl+C**.
+2. From the repository root, run:
 
 ```powershell
-Copy-Item .env.example .env
-docker compose up -d
-corepack.cmd pnpm db:migrate
-corepack.cmd pnpm db:seed
+Remove-Item -Recurse -Force .\apps\api\.demo-data
 corepack.cmd pnpm dev
 ```
 
-The supplied `.env.example` values are local placeholders only. The database migration, seed, and PostgreSQL checkout path have not been validated against a live PostgreSQL server in the authoring environment. Resetting data is destructive and requires `ALLOW_DEMO_RESET=yes`; inspect the reset script before using it.
+The API recreates demo storage from the fictional starter catalog as it is used again. This removes local demo state in that folder.
+
+## Languages
+
+The language selector offers English, Amharic, Tigrinya, Afaan Oromo, Somali, Afaraf, Sidaamu Afoo, Wolaytta and Gurage. The main storefront, How it works, About, news, account form and core order labels have expanded translations for Amharic, Tigrinya, Afaan Oromo and Somali. Afaraf, Sidaamu Afoo, Wolaytta and Gurage remain preview-level. Product and trader names are demo catalog content and may stay in their original language; some operational labels are not translated yet.
+
+## Merkato Daily
+
+Merkato Daily is a small, manually curated section of Ethiopia business reporting with article links and publication dates. It is static sample content, not a live feed or a MerkatoLink price source. Review each linked publisher for the full article.
+
+## Architecture
+
+![Local demo architecture: React web app, Fastify API and fictional JSON store, with an optional PostgreSQL foundation](docs/assets/architecture.svg)
+
+| Area                         | Technology                     | Current role                                                     |
+| ---------------------------- | ------------------------------ | ---------------------------------------------------------------- |
+| Web                          | React, TypeScript, Vite, CSS   | Storefront, checkout, account-profile form and trader preview    |
+| API                          | Fastify, TypeScript, Zod       | Catalog endpoints and validated local demo orders/profiles       |
+| Default storage              | Local JSON files               | Fictional profiles, orders and stock adjustments on one computer |
+| Optional database foundation | PostgreSQL migrations and seed | Separate development path; requires live-database verification   |
+
+The UI calls the local Fastify API directly. The default demo has no authentication or production-grade access controls. The optional PostgreSQL path is separate from the default local JSON flow.
+
+## Project structure
+
+```text
+apps/
+  web/                 React + TypeScript storefront and trader preview
+  api/                 Fastify API and local fictional demo store
+packages/
+  db/                  PostgreSQL migrations, seed and adapter
+  shared/              Shared schemas and types
+docs/
+  assets/              README diagrams and concept artwork
+  *.md                 API, deployment, research and coverage notes
+```
 
 ## Checks
 
-Run before submitting changes:
+Run these from the repository root:
 
 ```powershell
 corepack.cmd pnpm typecheck
@@ -52,25 +133,30 @@ corepack.cmd pnpm lint
 corepack.cmd pnpm build
 ```
 
-## Repository map
+## Known limitations
 
-| Path | Purpose |
-|---|---|
-| `apps/web` | React + TypeScript storefront and trader workspace preview (Vite) |
-| `apps/api` | Fastify API, demo JSON store and PostgreSQL catalog/order adapter |
-| `packages/db/migrations` | Versioned PostgreSQL schema migration |
-| `packages/db/supabase` | SQL reference schema and fictional seed data |
-| `packages/shared` | Shared Zod schemas and TypeScript types |
-| `docs` | Architecture, API, deployment, assumptions, research and proposal coverage audit |
+- The local profile is not authentication. There are no secure owner/staff roles or production tenant-isolation policies.
+- The JSON demo backend is not intended for deployment or simultaneous users. The PostgreSQL migration, seed and order path still need verification against a live database.
+- There is no live payment integration, e-invoice accreditation, automated email, or real trader onboarding.
+- Dashboard figures and Rate Shock values are illustrations; they are not live SQL reporting or financial advice.
+- Language coverage is incomplete; see [Languages](#languages).
+- Deployment is not configured by this repository. Do not expose the local demo API publicly or enter real personal/business data.
 
-## Proposal coverage and limitations
-
-See [docs/PROBLEM_COVERAGE.md](docs/PROBLEM_COVERAGE.md) for the item-by-item status against the 28 requested problems. Several features are only schema foundations or previews. Authentication, complete tenant authorization, database-backed trader workflows, PDF invoices, payments, RFQs, analytics service, CMS, poster editor, social scheduling and production operations are not complete. The project must not be used with real traders until security, privacy, data integrity, tax and operational requirements are implemented and reviewed.
-
-## Market, tax and privacy notes
-
-Research notes distinguish sourced observations from assumptions and should be confirmed with traders. Seed tax and landed-cost values are illustrative, not tax advice. No Ethiopian e-invoice accreditation or live payment-provider integration is claimed. See [docs/RESEARCH.md](docs/RESEARCH.md), [docs/ASSUMPTIONS.md](docs/ASSUMPTIONS.md), [SECURITY.md](SECURITY.md) and [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+For detailed feature-by-feature status, read [the proposal coverage audit](docs/PROBLEM_COVERAGE.md). Also see [API notes](docs/API.md), [deployment notes](docs/DEPLOYMENT.md), [research](docs/RESEARCH.md), [assumptions](docs/ASSUMPTIONS.md) and [security notes](SECURITY.md).
 
 ## GitHub
 
-After reviewing the demo and checks, create an empty GitHub repository, add its remote, then push the `main` branch. Keep `.env` and `.demo-data` out of commits; `.gitignore` already excludes them. Never commit real personal data or access tokens.
+This repository does not contain a GitHub remote by default. To publish your own copy:
+
+1. Create an empty repository on GitHub (do not initialize it with another README, `.gitignore` or license).
+2. In the VS Code terminal, run `git status` and check that no `.env`, credentials or real data are listed.
+3. Stage and commit the project, then add your repository URL and push:
+
+```powershell
+git add -A
+git commit -m "Complete MerkatoLink demo and documentation"
+git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
+git push -u origin main
+```
+
+Keep `.env` and `apps/api/.demo-data/` out of commits. The repository’s `.gitignore` excludes these local files. Never commit credentials or real personal/business data.

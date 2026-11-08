@@ -55,6 +55,27 @@ await registerHealthRoutes(app, async () => {
 app.get("/v1/meta", async () => ({ mode: demoMode ? "demo" : "database" }));
 if (store) await app.register(catalogRoutes, { store });
 if (store instanceof DemoCatalogStore) {
+  app.post("/v1/accounts/demo", async (request, reply) => {
+    const body = z
+      .object({
+        name: z.string().trim().min(2).max(100),
+        phone: z.string().regex(/^(?:\+251|0)?[79]\d{8}$/),
+        language: z.enum([
+          "en",
+          "am",
+          "ti",
+          "om",
+          "so",
+          "aa",
+          "sid",
+          "wal",
+          "gur",
+        ]),
+      })
+      .parse(request.body);
+    const account = await store.createDemoAccount(body);
+    return reply.code(201).send({ data: account, mode: "fictional-demo" });
+  });
   app.get("/v1/orders/demo", async () => ({
     data: await store.listDemoOrders(),
     mode: "demo-file",
@@ -142,6 +163,15 @@ app.get("/v1/auth/session", async () => ({
     "Phone OTP/email login will be enabled after auth provider configuration.",
 }));
 app.setErrorHandler((error: unknown, _req, reply) => {
+  if (error instanceof z.ZodError) {
+    return reply.code(400).send({
+      error: "Invalid request.",
+      details: error.issues.map((issue) => ({
+        field: issue.path.join("."),
+        message: issue.message,
+      })),
+    });
+  }
   app.log.error(error);
   const code =
     typeof error === "object" &&

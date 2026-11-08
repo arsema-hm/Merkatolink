@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Ethiopic:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap");
 :root {
   --ink: #282c24;
   --muted: #818176;
@@ -6,19 +6,36 @@
   --line: #e6e2d7;
   --green: #526747;
   --clay: #bd6448;
+  --surface: #faf8f2;
+  --surface-2: #eeece4;
+  --text-soft: #686a60;
+}
+:root[data-theme="dark"] {
+  --ink: #f3f3f0;
+  --muted: #a4a49e;
+  --paper: #111;
+  --line: #383838;
+  --green: #deded8;
+  --clay: #bcbcb5;
+  --surface: #1a1a1a;
+  --surface-2: #222;
+  --text-soft: #c0c0ba;
 }
 * {
   box-sizing: border-box;
 }
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 body {
   margin: 0;
+  overflow-x: clip;
   background: var(--paper);
   color: var(--ink);
   font:
     13px "DM Sans",
+    "Noto Sans Ethiopic",
     sans-serif;
 }
 button,
@@ -1863,5 +1880,423 @@ footer {
   .risk-table i {
     font-size: 7px;
     padding: 4px 5px;
+  }
+}
+
+.language-picker {
+  display: grid;
+  gap: 3px;
+  color: var(--text-soft);
+  font: 8px "DM Mono";
+}
+.language-picker select {
+  max-width: 125px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: 10px "DM Sans";
+}
+.icon-control,
+.account-button {
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: var(--ink);
+  padding: 0 10px;
+}
+.account-button {
+  font-size: 10px;
+  white-space: nowrap;
+}
+.icon-control:hover,
+.account-button:hover {
+  background: var(--surface-2);
+}
+.story-art img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.story-art:before,
+.story-art:after {
+  display: none;
+}
+.story-image-label {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  z-index: 2;
+  padding: 7px 9px;
+  color: white;
+  background: #111b;
+  font-size: 9px;
+}
+.story-photo-credit {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  z-index: 3;
+  color: white;
+  background: #111c;
+  padding: 5px 7px;
+  font-size: 8px;
+}
+.story-photo-credit a {
+  color: white;
+  text-decoration: underline;
+}
+.market-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 4vw, 52px);
+  background: #e2ded3;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 26px 0;
+}
+.market-flow > div {
+  min-width: 150px;
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 4px;
+}
+.market-flow > div > span {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #fff;
+  color: #526747;
+  font-size: 22px;
+}
+.market-flow b {
+  font: 16px "Playfair Display";
+}
+.market-flow small {
+  color: #686a60;
+  font-size: 9px;
+}
+.market-flow > i {
+  color: #777;
+  font: 22px "DM Sans";
+  font-style: normal;
+}
+.account-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  background: #0009;
+  padding: 20px;
+}
+.account-dialog {
+  position: relative;
+  width: min(100%, 430px);
+  max-height: 90vh;
+  overflow: auto;
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  padding: 32px;
+  box-shadow: 0 24px 70px #0004;
+}
+.account-dialog h2 {
+  font: 27px "Playfair Display";
+  margin: 11px 0;
+}
+.account-dialog > p {
+  color: var(--text-soft);
+  font-size: 11px;
+  line-height: 1.7;
+}
+.account-close {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+}
+.account-dialog form label {
+  display: grid;
+  gap: 7px;
+  margin: 17px 0;
+  color: var(--text-soft);
+  font-size: 10px;
+}
+.account-dialog input,
+.account-dialog select {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+}
+.account-submit {
+  width: 100%;
+  padding: 12px;
+  color: #fff;
+  border: 0;
+  background: #333;
+}
+.account-message {
+  color: var(--text-soft);
+  font-size: 10px;
+  line-height: 1.6;
+}
+.account-profile {
+  display: grid;
+  gap: 4px;
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+}
+.account-profile small {
+  color: var(--text-soft);
+}
+.news-section {
+  padding: 88px max(6vw, 24px);
+  background: var(--surface);
+  color: var(--ink);
+}
+.news-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1180px;
+  margin: 0 auto 30px;
+}
+.news-heading h2 {
+  margin: 8px 0;
+  font:
+    40px "Playfair Display",
+    Georgia,
+    serif;
+}
+.news-heading p {
+  margin: 0;
+  color: var(--text-soft);
+}
+.news-mark {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  font:
+    16px "Playfair Display",
+    Georgia,
+    serif;
+}
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.news-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 275px;
+  padding: 25px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+}
+.news-card small {
+  color: var(--text-soft);
+  font-size: 10px;
+  margin-top: 13px;
+}
+.news-tag {
+  color: #8c6849;
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  font-weight: 700;
+}
+.news-card h3 {
+  margin: 12px 0;
+  font:
+    22px/1.25 "Playfair Display",
+    Georgia,
+    serif;
+}
+.news-card p {
+  color: var(--text-soft);
+  font-size: 12px;
+  line-height: 1.7;
+}
+.news-card a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: auto;
+  padding-top: 12px;
+  color: var(--ink);
+  font-size: 11px;
+  text-decoration: none;
+}
+.news-card a:hover {
+  text-decoration: underline;
+}
+.news-disclaimer {
+  display: block;
+  max-width: 1180px;
+  margin: 18px auto 0;
+  color: var(--text-soft);
+  font-size: 10px;
+}
+:root[data-theme="dark"] body,
+:root[data-theme="dark"] .site,
+:root[data-theme="dark"] .header,
+:root[data-theme="dark"] .terra-directory,
+:root[data-theme="dark"] .shop-section,
+:root[data-theme="dark"] .promise,
+:root[data-theme="dark"] .how-section,
+:root[data-theme="dark"] .story,
+:root[data-theme="dark"] .news-section,
+:root[data-theme="dark"] .admin-overlay,
+:root[data-theme="dark"] .cart-drawer {
+  background: var(--paper);
+  color: var(--ink);
+}
+:root[data-theme="dark"] .announcement {
+  background: #050505;
+}
+:root[data-theme="dark"] .wordmark,
+:root[data-theme="dark"] nav a,
+:root[data-theme="dark"] .story-copy > p,
+:root[data-theme="dark"] .how-heading p,
+:root[data-theme="dark"] .how-steps p {
+  color: var(--text-soft);
+}
+:root[data-theme="dark"] .how-steps article,
+:root[data-theme="dark"] .news-card,
+:root[data-theme="dark"] .terra-tile,
+:root[data-theme="dark"] .ml-trader-card,
+:root[data-theme="dark"] .product,
+:root[data-theme="dark"] .admin-panels section,
+:root[data-theme="dark"] .admin-stats > div,
+:root[data-theme="dark"] .account-dialog {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--line);
+}
+:root[data-theme="dark"] .market-flow {
+  background: #252525;
+}
+:root[data-theme="dark"] .market-flow > div > span {
+  background: #393939;
+  color: #fff;
+}
+:root[data-theme="dark"] .market-flow small,
+:root[data-theme="dark"] .product-note,
+:root[data-theme="dark"] .product-meta,
+:root[data-theme="dark"] .section-heading p {
+  color: var(--text-soft);
+}
+:root[data-theme="dark"] input,
+:root[data-theme="dark"] select {
+  color: var(--ink);
+  background-color: #202020;
+  border-color: var(--line);
+}
+:root[data-theme="dark"] .drawer-scrim,
+:root[data-theme="dark"] .account-scrim {
+  background: #000b;
+}
+:root[data-theme="dark"] .bagbutton i {
+  background: #444;
+}
+@media (max-width: 900px) {
+  .header {
+    gap: 20px;
+  }
+  .headeractions {
+    gap: 10px;
+  }
+  .searchfield {
+    width: 155px;
+  }
+}
+@media (max-width: 650px) {
+  .news-section {
+    padding: 55px 20px;
+  }
+  .news-heading h2 {
+    font-size: 32px;
+  }
+  .news-grid {
+    grid-template-columns: 1fr;
+    gap: 11px;
+  }
+  .news-card {
+    min-height: auto;
+    padding: 20px;
+  }
+  .language-picker span,
+  .language-picker {
+    font-size: 0;
+  }
+  .language-picker select {
+    max-width: 78px;
+    font-size: 9px;
+  }
+  .account-button span {
+    display: none;
+  }
+  .icon-control,
+  .account-button {
+    min-width: 32px;
+    padding: 0 6px;
+  }
+  .headeractions {
+    gap: 6px;
+  }
+  .market-flow {
+    gap: 8px;
+    padding: 13px 6px;
+  }
+  .market-flow > div {
+    min-width: 0;
+    flex: 1;
+  }
+  .market-flow small {
+    display: none;
+  }
+  .market-flow > i {
+    font-size: 17px;
+  }
+  .story-photo-credit {
+    max-width: 48%;
+  }
+}
+@media (max-width: 400px) {
+  .header {
+    padding-inline: 10px;
+    gap: 7px;
+  }
+  .wordmark {
+    font-size: 18px;
+  }
+  .wordmark small {
+    letter-spacing: 0.5px;
+  }
+  .language-picker select {
+    max-width: 68px;
+  }
+  .headeractions {
+    gap: 4px;
   }
 }

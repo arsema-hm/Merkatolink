@@ -4,15 +4,15 @@
   "version": "0.1.0",
   "packageManager": "pnpm@11.25.0",
   "scripts": {
-    "install:all": "pnpm install",
-    "dev": "pnpm --parallel --filter @merkatolink/web --filter @merkatolink/api dev",
-    "test": "pnpm -r test",
-    "lint": "pnpm -r lint",
-    "typecheck": "pnpm -r typecheck",
-    "build": "pnpm -r build",
-    "db:migrate": "pnpm --filter @merkatolink/db migrate",
-    "db:seed": "pnpm --filter @merkatolink/db seed",
-    "db:reset": "pnpm --filter @merkatolink/db reset"
+    "install:all": "corepack pnpm install",
+    "dev": "corepack pnpm --parallel --filter @merkatolink/web --filter @merkatolink/api dev",
+    "test": "corepack pnpm -r test",
+    "lint": "corepack pnpm -r lint",
+    "typecheck": "corepack pnpm -r typecheck",
+    "build": "corepack pnpm -r build",
+    "db:migrate": "corepack pnpm --filter @merkatolink/db migrate",
+    "db:seed": "corepack pnpm --filter @merkatolink/db seed",
+    "db:reset": "corepack pnpm --filter @merkatolink/db reset"
   },
   "devDependencies": {
     "typescript": "^5.8.3",

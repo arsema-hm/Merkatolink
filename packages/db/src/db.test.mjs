@@ -21,9 +21,9 @@ test("fictional seed provisions the promised core sample sizes", async () => {
     new URL("../supabase/seed.sql", import.meta.url),
     "utf8",
   );
-  assert.match(seed, /generate_series\(1,20\)/);
+  assert.match(seed, /generate_series\(1,\s*20\)/);
   assert.match(seed, /'Broker Hana \(demo\)'/);
-  assert.match(seed, /generate_series\(1,150\)/);
-  assert.match(seed, /generate_series\(0,59\)/);
+  assert.match(seed, /generate_series\(1,\s*150\)/);
+  assert.match(seed, /generate_series\(0,\s*59\)/);
   assert.match(seed, /fictional demo rate/);
 });

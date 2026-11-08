@@ -1,6 +1,7 @@
 create or replace function app_user_id() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
 -- MerkatoLink / fictional demo schema. Apply in Supabase SQL editor in a fresh project.
 create extension if not exists pgcrypto;
+create sequence if not exists invoice_sequence;
 create type app_role as enum('admin','trader_owner','trader_staff','broker','buyer');
 create table terras(id bigint generated always as identity primary key,name text unique not null,name_am text,description text not null default '',icon text not null default '✳',created_at timestamptz not null default now());
 create table traders(id uuid primary key default gen_random_uuid(),terra_id bigint not null references terras,name text not null,owner_name text not null default '',shop_no text not null,landmark text not null,phone text,telegram text,tin text,license_no text,vat_registered boolean not null default false,verified boolean not null default false,logo_url text,primary_color text not null default '#526747',tagline text not null default '',created_at timestamptz not null default now());
@@ -128,3 +129,5 @@ begin
 end $$;
 create trigger orders_credit_limit_insert before insert on orders for each row execute function enforce_buyer_credit_limit();
 create trigger orders_credit_limit_update before update of buyer_id,payment_terms,due_date,total,status on orders for each row execute function enforce_buyer_credit_limit();
+
+ALTER TABLE deliveries ADD COLUMN IF NOT EXISTS delivery_address text;

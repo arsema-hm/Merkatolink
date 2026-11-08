@@ -4,12 +4,12 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "node --env-file=../../.env --import tsx --watch src/server.ts",
+    "dev": "corepack pnpm build && node --env-file-if-exists=../../.env --watch dist/server.js",
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "lint": "prettier --check src",
     "test": "vitest run --passWithNoTests",
-    "start": "node --env-file=../../.env dist/server.js"
+    "start": "node --env-file-if-exists=../../.env dist/server.js"
   },
   "dependencies": {
     "@fastify/cors": "^11.0.1",

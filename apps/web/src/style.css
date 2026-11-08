@@ -399,6 +399,71 @@ nav a:hover {
   grid-template-columns: repeat(3, 1fr) 160px;
   align-items: center;
 }
+.how-section {
+  padding: 86px 8.2% 92px;
+  background: #eeece4;
+  scroll-margin-top: 24px;
+}
+.how-heading {
+  max-width: 610px;
+  margin-bottom: 34px;
+}
+.how-heading h2 {
+  font: 500 clamp(32px, 4vw, 48px)/1.08 "Playfair Display";
+  letter-spacing: -1px;
+  margin: 12px 0;
+}
+.how-heading p {
+  max-width: 540px;
+  color: #717267;
+  line-height: 1.8;
+}
+.how-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.how-steps article {
+  position: relative;
+  min-height: 205px;
+  background: #faf9f5;
+  border: 1px solid var(--line);
+  padding: 25px;
+}
+.how-steps article > span {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #aaa99e;
+  font: 11px "DM Mono";
+}
+.how-steps article > svg {
+  width: 23px;
+  height: 23px;
+  color: var(--green);
+  margin: 12px 0 20px;
+}
+.how-steps h3 {
+  font: 18px "Playfair Display";
+  margin: 0 0 9px;
+}
+.how-steps p {
+  color: #77786d;
+  font-size: 11px;
+  line-height: 1.7;
+  margin: 0;
+}
+.how-section > .hero-cta {
+  display: inline-flex;
+}
+.story {
+  scroll-margin-top: 24px;
+}
+.terra-directory,
+.shop-section {
+  scroll-margin-top: 24px;
+}
 .promise > div:not(.promise-aside) {
   display: grid;
   grid-template-columns: 38px 1fr;
@@ -1240,6 +1305,15 @@ footer {
   .promise {
     margin-inline: 6%;
     grid-template-columns: repeat(3, 1fr);
+  }
+  .how-section {
+    padding: 60px 7%;
+  }
+  .how-steps {
+    grid-template-columns: 1fr;
+  }
+  .how-steps article {
+    min-height: 170px;
   }
   .promise-aside {
     display: none;
